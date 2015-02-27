@@ -19,6 +19,10 @@ public class CreateNoteActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+        name = (EditText) findViewById(R.id.name);
+        body = (EditText) findViewById(R.id.body);
+        name.setHint("Header");
+        body.setHint("Details");
     }
 
     @Override
@@ -40,6 +44,9 @@ public class CreateNoteActivity extends ActionBarActivity {
     public void backToMain (MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+    public void cancelButton (View v) {
+        startActivity(new Intent(this, MainActivity.class));
     }
     public void createMind (View v) {
         name = (EditText) findViewById(R.id.name);

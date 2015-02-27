@@ -8,7 +8,7 @@
     <string name="lock">Lock it</string>
     <string name="content">Contents of this article</string>
     <string name="byDate">By Date</string>
-    <string name="titleAdd">Create Note</string>
+    <string name="titleAdd">Create Mind</string>
     <string name="byAlph">By Alphabet</string>
     <string name="title_activity_create_note">CreateNoteActivity</string>
     <string name="hello_world">Hello world!</string>
