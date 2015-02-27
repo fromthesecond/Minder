@@ -1,5 +1,6 @@
 package com.fireblink.minder;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.gc.materialdesign.widgets.SnackBar;
 
 
 public class CreateNoteActivity extends ActionBarActivity {
@@ -52,7 +55,13 @@ public class CreateNoteActivity extends ActionBarActivity {
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
         if (name.getText().toString().isEmpty() || body.getText().toString().isEmpty()) {
-            Toast.makeText(this,"Insert text into fields!", Toast.LENGTH_SHORT).show();
+            final SnackBar snackbar = new SnackBar(this, "No data has been entered for the note. All fields are required.", "OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            snackbar.show();
         } else {
             DataBaseHandler db = new DataBaseHandler(this);
             db.addMind(new Mind(name.getText().toString(), body.getText().toString()));

@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.gc.materialdesign.widgets.Dialog;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
@@ -70,9 +71,24 @@ public class MainActivity extends ActionBarActivity  {
         startActivity(intent);
     }
     public void testDelAllMinds(MenuItem item) {
-        db.deleteAll();
-        startActivity(new Intent(MainActivity.this, MainActivity.class));
-        Toast.makeText(this, "All minds have been deleted", Toast.LENGTH_LONG).show();
+        Dialog dialog = new Dialog(this,"Delete all minds", "Do you want to delete all minds ? ");
+        dialog.show();
+        dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteAll();
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                Toast.makeText(getApplicationContext(), "All minds have been deleted", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        dialog.setOnCancelButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
+            }
+        });
+
     }
 
 }

@@ -44,22 +44,22 @@
         android:gravity="right"
         android:layout_marginRight="10dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            style="@style/flatButton"
+        <com.gc.materialdesign.views.ButtonFlat
             android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#00bcd4"
             android:onClick="cancelButton"
+            android:text="@string/cancel"
             android:layout_marginRight="4dp" />
 
-        <Button
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save"
+            android:background="#00bcd4"
             android:onClick="createMind"
-            android:id="@+id/button2"
-            style="@style/raisedButton" />
+            android:text="@string/save" />
     </LinearLayout>
 
 </LinearLayout>
