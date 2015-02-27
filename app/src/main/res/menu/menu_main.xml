@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fireblink.minder.MainActivity">
+    <item
+        android:id="@+id/menu_search"
+        android:title="@string/app_name"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:orderInCategory="1"
+        app:showAsAction="always"/>
+    <item android:id="@+id/lock"
+        android:title="@string/lock"
+        android:onClick="testDelAllMinds"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_lock_white_18dp"
+        app:showAsAction="always"/>
+</menu>
