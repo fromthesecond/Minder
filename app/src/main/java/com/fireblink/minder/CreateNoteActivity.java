@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class CreateNoteActivity extends ActionBarActivity {
@@ -43,9 +44,13 @@ public class CreateNoteActivity extends ActionBarActivity {
     public void createMind (View v) {
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
-        DataBaseHandler db = new DataBaseHandler(this);
-        db.addMind(new Mind(name.getText().toString(), body.getText().toString()));
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if (name.getText().toString().isEmpty() || body.getText().toString().isEmpty()) {
+            Toast.makeText(this,"Insert text into fields!", Toast.LENGTH_SHORT).show();
+        } else {
+            DataBaseHandler db = new DataBaseHandler(this);
+            db.addMind(new Mind(name.getText().toString(), body.getText().toString()));
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 }

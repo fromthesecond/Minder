@@ -17,8 +17,9 @@ public class ViewMindActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_mind);
-        Log.e("Debug: ", getIntent().getExtras().getString("title")+ " intent from ViewMind title");
-        Log.e("Debug: ", getIntent().getExtras().getString("body")+ " intent from ViewMind body");
+        setTitle(getIntent().getExtras().getString("title"));
+        Log.i("Debug: ", getIntent().getExtras().getString("title")+ " intent from ViewMind title");
+        Log.i("Debug: ", getIntent().getExtras().getString("body")+ " intent from ViewMind body");
         title = (TextView) findViewById(R.id.titleTxt);
         body = (TextView) findViewById(R.id.bodyTxt);
         title.setText(getIntent().getExtras().getString("title"));

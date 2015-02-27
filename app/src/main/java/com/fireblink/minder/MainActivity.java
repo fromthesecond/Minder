@@ -44,11 +44,11 @@ public class MainActivity extends ActionBarActivity  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int dbId = (int) parent.getAdapter().getItemId(position) + 1;
-                Log.e("Debug: ", String.valueOf(dbId)+ " dbID");
+                Log.i("Debug: ", String.valueOf(dbId)+ " dbID");
                 intent = new Intent(MainActivity.this, ViewMindActivity.class);
                 intent.putExtra("title", db.getMindById(dbId).get_name());
                 intent.putExtra("body", db.getMindById(dbId).get_body());
-                Log.e("Debug: ", db.getMindById(dbId).get_body()+ " body value");
+                Log.i("Debug: ", db.getMindById(dbId).get_body()+ " body value");
                 startActivity(intent);
             }
         });
@@ -71,6 +71,7 @@ public class MainActivity extends ActionBarActivity  {
     }
     public void testDelAllMinds(MenuItem item) {
         db.deleteAll();
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
         Toast.makeText(this, "All minds have been deleted", Toast.LENGTH_LONG).show();
     }
 

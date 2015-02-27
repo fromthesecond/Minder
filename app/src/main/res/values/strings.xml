@@ -19,6 +19,7 @@
     <string name="cancel">CANCEL</string>
     <string name="view">View Mind</string>
     <string name="title">Title</string>
+    <string name="viewMindTitle">Title</string>
     <string name="title_activity_view_mind">ViewMindActivity</string>
 
 </resources>

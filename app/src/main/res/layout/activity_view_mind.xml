@@ -1,24 +1,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.fireblink.minder.ViewMindActivity"
     android:orientation="vertical">
 
-
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardViewTitle"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardBackgroundColor="#fafafa"
+        android:padding="18dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/titleTxt"
         android:layout_gravity="center_horizontal|left"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardViewBody"
+        card_view:cardCornerRadius="8dp"
+
+        card_view:cardBackgroundColor="#fafafa"
+        android:padding="8dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/bodyTxt"
         android:layout_gravity="center_horizontal|left" />
+    </android.support.v7.widget.CardView>
 </LinearLayout>
