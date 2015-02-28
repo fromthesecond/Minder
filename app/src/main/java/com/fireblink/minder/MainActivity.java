@@ -49,6 +49,7 @@ public class MainActivity extends ActionBarActivity  {
                 intent = new Intent(MainActivity.this, ViewMindActivity.class);
                 intent.putExtra("title", db.getMindById(dbId).get_name());
                 intent.putExtra("body", db.getMindById(dbId).get_body());
+                intent.putExtra("id", db.getMindById(dbId).get_id());
                 Log.i("Debug: ", db.getMindById(dbId).get_body()+ " body value");
                 startActivity(intent);
             }

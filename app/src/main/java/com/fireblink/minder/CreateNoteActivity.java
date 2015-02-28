@@ -51,6 +51,7 @@ public class CreateNoteActivity extends ActionBarActivity {
     public void cancelButton (View v) {
         startActivity(new Intent(this, MainActivity.class));
     }
+
     public void createMind (View v) {
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
