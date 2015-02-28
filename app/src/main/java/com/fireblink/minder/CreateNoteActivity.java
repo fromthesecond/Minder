@@ -55,7 +55,7 @@ public class CreateNoteActivity extends ActionBarActivity {
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
         if (name.getText().toString().isEmpty() || body.getText().toString().isEmpty()) {
-            final SnackBar snackbar = new SnackBar(this, "No data has been entered for the note. All fields are required.", "OK", new View.OnClickListener() {
+            final SnackBar snackbar = new SnackBar(this, "All fields are required.", "OK", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
