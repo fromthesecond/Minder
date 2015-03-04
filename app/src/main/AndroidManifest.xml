@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,10 +21,12 @@
         </activity>
         <activity
             android:name=".CreateNoteActivity"
-            android:label="@string/titleAdd" >
+            android:label="@string/titleAdd"
+            android:clearTaskOnLaunch="true">
         </activity>
         <activity
             android:name=".ViewMindActivity"
+            android:clearTaskOnLaunch="true"
             android:label="@string/title_activity_view_mind" >
         </activity>
     </application>

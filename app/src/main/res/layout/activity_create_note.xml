@@ -22,18 +22,17 @@
         <EditText
             android:layout_width="290dp"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            style="@style/Widget.AppCompat.EditText"
-            android:id="@+id/body"
-            android:layout_gravity="center_horizontal" />
-
-        <EditText
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
             android:id="@+id/name"
             android:layout_gravity="center_horizontal"
             style="@style/Widget.AppCompat.EditText"
             android:paddingBottom="50dp" />
+        <EditText
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            style="@style/Widget.AppCompat.EditText"
+            android:id="@+id/body"
+            android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

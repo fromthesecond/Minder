@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.gc.materialdesign.widgets.Dialog;
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity  {
     private DataBaseHandler db;
     private List<Mind> minds;
     private Intent intent;
+    private SimpleCursorAdapter cursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class MainActivity extends ActionBarActivity  {
         db = new DataBaseHandler(this);
         minds = db.getAllMinds();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+
         for (Mind cn : minds) {
             adapter.add(cn.get_name());
         }
@@ -45,15 +48,18 @@ public class MainActivity extends ActionBarActivity  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int dbId = (int) parent.getAdapter().getItemId(position) + 1;
-                Log.i("Debug: ", String.valueOf(dbId)+ " dbID");
+
+                Log.i("Debug: ", String.valueOf(dbId) + " dbID");
                 intent = new Intent(MainActivity.this, ViewMindActivity.class);
                 intent.putExtra("title", db.getMindById(dbId).get_name());
                 intent.putExtra("body", db.getMindById(dbId).get_body());
                 intent.putExtra("id", db.getMindById(dbId).get_id());
-                Log.i("Debug: ", db.getMindById(dbId).get_body()+ " body value");
-                startActivity(intent);
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+                finish();
+
             }
         });
+        db.close();
     }
 
     @Override
@@ -70,6 +76,7 @@ public class MainActivity extends ActionBarActivity  {
     public void onFloatingButtonClick (View v){
         Intent intent = new Intent(this, CreateNoteActivity.class);
         startActivity(intent);
+        finish();
     }
     public void testDelAllMinds(MenuItem item) {
         Dialog dialog = new Dialog(this,"Delete all minds", "Do you want to delete all minds ? ");
@@ -82,14 +89,6 @@ public class MainActivity extends ActionBarActivity  {
                 Toast.makeText(getApplicationContext(), "All minds have been deleted", Toast.LENGTH_LONG).show();
             }
         });
-
-        dialog.setOnCancelButtonClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-            }
-        });
-
     }
 
 }

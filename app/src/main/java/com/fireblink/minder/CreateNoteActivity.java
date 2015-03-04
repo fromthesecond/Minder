@@ -47,6 +47,7 @@ public class CreateNoteActivity extends ActionBarActivity {
     public void backToMain (MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
     public void cancelButton (View v) {
         startActivity(new Intent(this, MainActivity.class));
@@ -59,15 +60,17 @@ public class CreateNoteActivity extends ActionBarActivity {
             final SnackBar snackbar = new SnackBar(this, "All fields are required.", "OK", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    finish();
                 }
             });
             snackbar.show();
         } else {
             DataBaseHandler db = new DataBaseHandler(this);
             db.addMind(new Mind(name.getText().toString(), body.getText().toString()));
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
+            finish();
+            db.close();
         }
     }
 }

@@ -43,12 +43,12 @@ public class ViewMindActivity extends ActionBarActivity {
     public void backToMain (MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish();
     }
     public void deleteMind (MenuItem item) {
         db = new DataBaseHandler(this);
         db.deleteMind(db.getMindById(getIntent().getIntExtra("id", 0)));
-        startActivity(new Intent(ViewMindActivity.this, MainActivity.class));
+        startActivity(new Intent(ViewMindActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+        finish();
     }
 
 }
