@@ -2,6 +2,7 @@ package com.fireblink.minder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -14,7 +15,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.widgets.Dialog;
+import com.gc.materialdesign.widgets.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
@@ -28,6 +31,7 @@ public class MainActivity extends ActionBarActivity  {
     private List<Mind> minds;
     private Intent intent;
     private SimpleCursorAdapter cursorAdapter;
+    private boolean exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,6 @@ public class MainActivity extends ActionBarActivity  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int dbId = (int) parent.getAdapter().getItemId(position) + 1;
-
                 Log.i("Debug: ", String.valueOf(dbId) + " dbID");
                 intent = new Intent(MainActivity.this, ViewMindActivity.class);
                 intent.putExtra("title", db.getMindById(dbId).get_name());
@@ -56,7 +59,7 @@ public class MainActivity extends ActionBarActivity  {
                 intent.putExtra("id", db.getMindById(dbId).get_id());
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
                 finish();
-
+                db.close();
             }
         });
         db.close();
@@ -73,6 +76,7 @@ public class MainActivity extends ActionBarActivity  {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
+
     public void onFloatingButtonClick (View v){
         Intent intent = new Intent(this, CreateNoteActivity.class);
         startActivity(intent);
@@ -87,8 +91,18 @@ public class MainActivity extends ActionBarActivity  {
                 db.deleteAll();
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
                 Toast.makeText(getApplicationContext(), "All minds have been deleted", Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+           finish();
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
+            exit = true;
+        }
+    }
 }

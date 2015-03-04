@@ -49,6 +49,14 @@ public class CreateNoteActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public void cancelButton (View v) {
         startActivity(new Intent(this, MainActivity.class));
     }
@@ -60,7 +68,6 @@ public class CreateNoteActivity extends ActionBarActivity {
             final SnackBar snackbar = new SnackBar(this, "All fields are required.", "OK", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
                 }
             });
             snackbar.show();
