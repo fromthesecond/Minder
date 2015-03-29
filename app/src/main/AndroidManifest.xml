@@ -12,6 +12,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
+
             android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,11 +21,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/ToolBarCustom"
             android:name=".CreateNoteActivity"
             android:label="@string/titleAdd"
+            android:parentActivityName = ".MainActivity"
             android:clearTaskOnLaunch="true">
         </activity>
         <activity
+            android:theme="@style/ToolBarCustom"
             android:name=".ViewMindActivity"
             android:clearTaskOnLaunch="true"
             android:label="@string/title_activity_view_mind" >

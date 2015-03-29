@@ -2,8 +2,10 @@ package com.fireblink.minder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,20 @@ public class CreateNoteActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.customToolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(CreateNoteActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+
+        }
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
         name.setHint("Header");
@@ -31,7 +47,7 @@ public class CreateNoteActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_create_note, menu);
+        //getMenuInflater().inflate(R.menu.menu_create_note, menu);
         return true;
     }
 
@@ -39,6 +55,10 @@ public class CreateNoteActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.back) {
+            return true;
+        }
+        if (id == R.id.home) {
+           NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 
