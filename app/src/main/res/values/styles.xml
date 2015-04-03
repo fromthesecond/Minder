@@ -29,6 +29,7 @@
     </style>
     <style name="customEditText2" parent="customEditText">
         <item name="android:textSize">14sp</item>
+        <item name="android:editTextColor">#FFFFFF</item>
         <item name="colorControlHighlight">#424242</item>
     </style>
     <style name="ToolBarCustom" parent="Theme.AppCompat.NoActionBar">

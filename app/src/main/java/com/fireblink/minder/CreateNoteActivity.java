@@ -19,12 +19,13 @@ public class CreateNoteActivity extends ActionBarActivity {
 
     private EditText name;
     private EditText body;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.customToolbar);
+        toolbar = (Toolbar) findViewById(R.id.customToolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -36,12 +37,13 @@ public class CreateNoteActivity extends ActionBarActivity {
                     finish();
                 }
             });
-
         }
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
         name.setHint("Header");
         body.setHint("Details");
+        name.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        body.setHintTextColor(getResources().getColor(R.color.colorPrimary));
     }
 
     @Override

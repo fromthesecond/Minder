@@ -1,8 +1,8 @@
 package com.fireblink.minder;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -12,10 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
@@ -30,7 +28,6 @@ public class MainActivity extends ActionBarActivity  {
     private DataBaseHandler db;
     private List<Mind> minds;
     private Intent intent;
-    private SimpleCursorAdapter cursorAdapter;
     private boolean exit;
 
     @Override
@@ -43,7 +40,6 @@ public class MainActivity extends ActionBarActivity  {
         db = new DataBaseHandler(this);
         minds = db.getAllMinds();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-
         for (Mind cn : minds) {
             adapter.add(cn.get_name());
         }
@@ -71,12 +67,6 @@ public class MainActivity extends ActionBarActivity  {
         inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
-    }
-
     public void onFloatingButtonClick (View v){
         Intent intent = new Intent(this, CreateNoteActivity.class);
         startActivity(intent);
@@ -90,6 +80,7 @@ public class MainActivity extends ActionBarActivity  {
             public void onClick(View v) {
                 db.deleteAll();
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
+                //setResult(RESULT_OK, intent);
                 Toast.makeText(getApplicationContext(), "All minds have been deleted", Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -104,5 +95,22 @@ public class MainActivity extends ActionBarActivity  {
             Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
             exit = true;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getApplicationContext(),"asasa", Toast.LENGTH_SHORT).show();
+        String message = "Error";
+        if (resultCode == RESULT_OK) {
+            message = "All minds have been deleted";
+        }
+        SnackBar snackbar = new SnackBar(MainActivity.this, message, "OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        snackbar.show();
     }
 }
