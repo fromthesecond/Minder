@@ -1,19 +1,14 @@
 package com.fireblink.minder;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.gc.materialdesign.widgets.Dialog;
-import com.gc.materialdesign.widgets.SnackBar;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class ViewMindActivity extends ActionBarActivity {
 
@@ -25,6 +20,7 @@ public class ViewMindActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_mind);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.customToolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -37,20 +33,19 @@ public class ViewMindActivity extends ActionBarActivity {
                     finish();
                 }
             });
-
         }
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
         setTitle(getIntent().getExtras().getString("title"));
-        Log.i("Debug: ", getIntent().getExtras().getString("title")+ " intent from ViewMind title");
-        Log.i("Debug: ", getIntent().getExtras().getString("body")+ " intent from ViewMind body");
         title = (TextView) findViewById(R.id.titleTxt);
         body = (TextView) findViewById(R.id.bodyTxt);
-        title.setText(getIntent().getExtras().getString("title"));
+        title.setText(getIntent().getExtras().getString("title").toUpperCase());
         body.setText(getIntent().getExtras().getString("body"));
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_view_mind, menu);
         return true;
     }
@@ -65,7 +60,6 @@ public class ViewMindActivity extends ActionBarActivity {
         startActivity(new Intent(ViewMindActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
         finish();
     }
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);

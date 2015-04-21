@@ -2,6 +2,7 @@ package com.fireblink.minder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gc.materialdesign.widgets.SnackBar;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
 public class CreateNoteActivity extends ActionBarActivity {
@@ -25,6 +27,10 @@ public class CreateNoteActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
         toolbar = (Toolbar) findViewById(R.id.customToolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -42,14 +48,12 @@ public class CreateNoteActivity extends ActionBarActivity {
         body = (EditText) findViewById(R.id.body);
         name.setHint("Header");
         body.setHint("Details");
-        name.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        body.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        name.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
+        body.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_create_note, menu);
         return true;
     }
 
@@ -81,6 +85,7 @@ public class CreateNoteActivity extends ActionBarActivity {
 
     public void cancelButton (View v) {
         startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     public void createMind (View v) {

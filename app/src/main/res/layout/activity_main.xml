@@ -16,6 +16,6 @@
         android:layout_margin="16dp"
         android:onClick="onFloatingButtonClick"
         android:src="@drawable/ic_add_white_24dp"
-        fab:fab_colorNormal="#e91e63"
-        fab:fab_colorPressed="#00bcd4" />
+        fab:fab_colorNormal="@color/floatButtonMainColor"
+        fab:fab_colorPressed="@color/floatButtonSecondaryColor" />
 </FrameLayout>

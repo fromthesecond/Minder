@@ -1,6 +1,5 @@
 package com.fireblink.minder;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -13,10 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.List;
 
@@ -36,6 +35,10 @@ public class MainActivity extends ActionBarActivity  {
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(android.R.id.list);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
         fab.attachToListView(listView);
         db = new DataBaseHandler(this);
         minds = db.getAllMinds();
@@ -80,7 +83,6 @@ public class MainActivity extends ActionBarActivity  {
             public void onClick(View v) {
                 db.deleteAll();
                 startActivity(new Intent(MainActivity.this, MainActivity.class));
-                //setResult(RESULT_OK, intent);
                 Toast.makeText(getApplicationContext(), "All minds have been deleted", Toast.LENGTH_LONG).show();
                 finish();
             }

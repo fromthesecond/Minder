@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00bcd4</color>
-    <color name="colorPrimaryDark">#00acc1</color>
+    <color name="colorPrimaryBlue500">#3f51b5</color>
+    <color name="colorPrimaryDarkBlue700">#303f9f</color>
+    <color name="colorWhite">#fafafa</color>
+    <color name="floatButtonMainColor">#e91e63</color>
+    <color name="floatButtonSecondaryColor">@color/colorPrimaryBlue500</color>
+    <color name="colorBlack">#263238</color>
 </resources>
