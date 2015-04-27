@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,21 +23,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <EditText
-            android:layout_width="fill_parent"
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/name"
             android:layout_gravity="center_horizontal"
             style="@style/customEditText"
-            android:paddingBottom="50dp" />
-        <EditText
-            android:layout_width="fill_parent"
+            app:met_singleLineEllipsis="true"
+            app:met_minCharacters="3"
+            app:met_maxCharacters="140"/>
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             style="@style/customEditText2"
             android:id="@+id/body"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            app:met_singleLineEllipsis="true"
+            app:met_minCharacters="5"
+            app:met_maxCharacters="500"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
