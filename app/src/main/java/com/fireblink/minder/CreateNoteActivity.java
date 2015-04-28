@@ -101,10 +101,10 @@ public class CreateNoteActivity extends ActionBarActivity {
         } else {
             DataBaseHandler db = new DataBaseHandler(this);
             db.addMind(new Mind(name.getText().toString(), body.getText().toString()));
-            Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
             finish();
             db.close();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 }
