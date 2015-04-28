@@ -8,6 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
+import com.r0adkll.slidr.model.SlidrPosition;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class ViewMindActivity extends ActionBarActivity {
@@ -20,7 +24,17 @@ public class ViewMindActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_mind);
-
+        int primary = getResources().getColor(R.color.colorPrimaryBlue500);
+        int secondary = getResources().getColor(R.color.colorPrimaryDarkBlue700);
+        SlidrConfig config = new SlidrConfig.Builder()
+                .primaryColor(primary)
+                .secondaryColor(secondary)
+                .position(
+                        SlidrPosition.LEFT
+                )
+                .sensitivity(0.2f)
+                .build();
+        Slidr.attach(this,config);
         Toolbar toolbar = (Toolbar) findViewById(R.id.customToolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -53,6 +67,7 @@ public class ViewMindActivity extends ActionBarActivity {
     public void backToMain (MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
     public void deleteMind (MenuItem item) {
         db = new DataBaseHandler(this);

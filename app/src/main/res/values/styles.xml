@@ -5,6 +5,7 @@
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:clipToPadding">false</item>
         <item name="android:textSize">14sp</item>
+
     </style>
     <style name="titleStyle" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
@@ -39,5 +40,7 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:fitsSystemWindows">true</item>
         <item name="android:clipToPadding">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 </resources>

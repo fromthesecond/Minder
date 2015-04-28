@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.fireblink.minder.ViewMindActivity"
     android:orientation="vertical"
-    android:background="@color/colorWhite">
+    android:background="@color/background_material_light">
     <include
         android:id="@+id/customToolbar"
         style="@style/ToolBarCustom"

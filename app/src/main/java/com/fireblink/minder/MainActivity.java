@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
+import com.r0adkll.slidr.Slidr;
+import com.r0adkll.slidr.model.SlidrConfig;
+import com.r0adkll.slidr.model.SlidrPosition;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.List;
@@ -57,7 +60,7 @@ public class MainActivity extends ActionBarActivity  {
                 intent.putExtra("body", db.getMindById(dbId).get_body());
                 intent.putExtra("id", db.getMindById(dbId).get_id());
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                finish();
+                //finish();
                 db.close();
             }
         });
@@ -92,9 +95,12 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     public void onBackPressed() {
         if (exit) {
-           finish();
+        if (!isFinishing()){
+            finish();
+        }
+
         } else {
-            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Press Back Again to Exit", Toast.LENGTH_LONG).show();
             exit = true;
         }
     }

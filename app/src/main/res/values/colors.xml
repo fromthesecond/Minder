@@ -6,4 +6,5 @@
     <color name="floatButtonMainColor">#e91e63</color>
     <color name="floatButtonSecondaryColor">@color/colorPrimaryBlue500</color>
     <color name="colorBlack">#263238</color>
+    <color name="indigo300">#7986cb</color>
 </resources>
