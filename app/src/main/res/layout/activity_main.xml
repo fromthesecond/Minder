@@ -1,15 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_material_light">
 
-    <uk.co.androidalliance.edgeeffectoverride.ListView
+    <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:edgeeffect_color="@color/floatButtonSecondaryColor"/>
+        android:layout_height="match_parent" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
