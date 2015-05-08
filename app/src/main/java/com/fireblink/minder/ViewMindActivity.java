@@ -1,6 +1,5 @@
 package com.fireblink.minder;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +25,38 @@ public class ViewMindActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_mind);
         int primary = getResources().getColor(R.color.colorPrimaryBlue500);
         int secondary = getResources().getColor(R.color.colorPrimaryDarkBlue700);
+        setupSlidr(primary, secondary);
+        setupToolBar();
+        setupSystemBarColor();
+        setTitle(getIntent().getExtras().getString("title"));
+        title = (TextView) findViewById(R.id.titleTxt);
+        body = (TextView) findViewById(R.id.bodyTxt);
+        title.setText(getIntent().getExtras().getString("title").toUpperCase());
+        body.setText(getIntent().getExtras().getString("body"));
+    }
+
+    private void setupSystemBarColor() {
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
+    }
+
+    private void setupToolBar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.customToolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+    }
+
+    private void setupSlidr(int primary, int secondary) {
         SlidrConfig config = new SlidrConfig.Builder()
                 .primaryColor(primary)
                 .secondaryColor(secondary)
@@ -34,51 +65,27 @@ public class ViewMindActivity extends ActionBarActivity {
                 )
                 .sensitivity(0.2f)
                 .build();
-        Slidr.attach(this,config);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.customToolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ViewMindActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
-        setTitle(getIntent().getExtras().getString("title"));
-        title = (TextView) findViewById(R.id.titleTxt);
-        body = (TextView) findViewById(R.id.bodyTxt);
-        title.setText(getIntent().getExtras().getString("title").toUpperCase());
-        body.setText(getIntent().getExtras().getString("body"));
+        Slidr.attach(this, config);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_view_mind, menu);
         return true;
     }
 
-    public void backToMain (MenuItem item) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    public void backToMain(MenuItem item) {
         finish();
     }
-    public void deleteMind (MenuItem item) {
+
+    public void deleteMind(MenuItem item) {
         db = new DataBaseHandler(this);
         db.deleteMind(db.getMindById(getIntent().getIntExtra("id", 0)));
-        startActivity(new Intent(ViewMindActivity.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
         finish();
     }
+
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

@@ -1,5 +1,7 @@
 package com.fireblink.minder;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
@@ -22,7 +25,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity  {
+public class MainActivity extends ActionBarActivity {
 
     private ArrayAdapter<String> adapter;
     private FloatingActionButton fab;
@@ -36,13 +39,15 @@ public class MainActivity extends ActionBarActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setSystemBarColor(this);
         listView = (ListView) findViewById(android.R.id.list);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
         fab.attachToListView(listView);
+        attachDataToList();
+        setOnListItemClickListener();
+    }
+
+    private void attachDataToList() {
         db = new DataBaseHandler(this);
         minds = db.getAllMinds();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
@@ -50,6 +55,10 @@ public class MainActivity extends ActionBarActivity  {
             adapter.add(cn.get_name());
         }
         listView.setAdapter(adapter);
+        db.close();
+    }
+
+    private void setOnListItemClickListener() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -59,12 +68,17 @@ public class MainActivity extends ActionBarActivity  {
                 intent.putExtra("title", db.getMindById(dbId).get_name());
                 intent.putExtra("body", db.getMindById(dbId).get_body());
                 intent.putExtra("id", db.getMindById(dbId).get_id());
-                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                //finish();
+                startActivity(intent);
                 db.close();
             }
         });
-        db.close();
+    }
+
+    public void setSystemBarColor(Activity activity) {
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
     }
 
     @Override
@@ -73,13 +87,15 @@ public class MainActivity extends ActionBarActivity  {
         inflater.inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-    public void onFloatingButtonClick (View v){
+
+    public void onFloatingButtonClick(View v) {
         Intent intent = new Intent(this, CreateNoteActivity.class);
         startActivity(intent);
         finish();
     }
+
     public void testDelAllMinds(MenuItem item) {
-        Dialog dialog = new Dialog(this,"Delete all minds", "Do you want to delete all minds ? ");
+        Dialog dialog = new Dialog(this, "Delete all minds", "Do you want to delete all minds ? ");
         dialog.show();
         dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
             @Override
@@ -95,9 +111,9 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     public void onBackPressed() {
         if (exit) {
-        if (!isFinishing()){
-            finish();
-        }
+            if (!isFinishing()) {
+                finish();
+            }
 
         } else {
             Toast.makeText(this, "Press Back Again to Exit", Toast.LENGTH_LONG).show();
@@ -108,7 +124,7 @@ public class MainActivity extends ActionBarActivity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getApplicationContext(),"asasa", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "asasa", Toast.LENGTH_SHORT).show();
         String message = "Error";
         if (resultCode == RESULT_OK) {
             message = "All minds have been deleted";

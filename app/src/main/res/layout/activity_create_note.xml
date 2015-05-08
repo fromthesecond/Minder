@@ -35,13 +35,13 @@
         <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
             style="@style/customEditText2"
             android:id="@+id/body"
             android:layout_gravity="center_horizontal"
-            app:met_singleLineEllipsis="true"
             app:met_minCharacters="5"
-            app:met_maxCharacters="500"/>
+            app:met_maxCharacters="1000"
+            android:inputType="textMultiLine" />
+
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -71,4 +71,8 @@
             android:text="@string/save" />
     </LinearLayout>
 
+    <com.squareup.timessquare.CalendarPickerView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -1,20 +1,21 @@
 package com.fireblink.minder;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.gc.materialdesign.widgets.SnackBar;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.timessquare.CalendarPickerView;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class CreateNoteActivity extends ActionBarActivity {
@@ -22,15 +23,24 @@ public class CreateNoteActivity extends ActionBarActivity {
     private EditText name;
     private EditText body;
     private Toolbar toolbar;
+    private CalendarPickerView calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
+        setupCalendarDemo();
+        setupSystemBarColor();
+        setupToolBar();
+        name = (EditText) findViewById(R.id.name);
+        body = (EditText) findViewById(R.id.body);
+        name.setHint("Header");
+        body.setHint("Details");
+        name.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
+        body.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
+    }
+
+    private void setupToolBar() {
         toolbar = (Toolbar) findViewById(R.id.customToolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -44,12 +54,23 @@ public class CreateNoteActivity extends ActionBarActivity {
                 }
             });
         }
-        name = (EditText) findViewById(R.id.name);
-        body = (EditText) findViewById(R.id.body);
-        name.setHint("Header");
-        body.setHint("Details");
-        name.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
-        body.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
+    }
+
+    private void setupSystemBarColor() {
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
+    }
+
+    private void setupCalendarDemo() {
+        Calendar nextYear = Calendar.getInstance();
+        nextYear.add(Calendar.YEAR, 1);
+
+        calendar = (CalendarPickerView) findViewById(R.id.calendar_view);
+        final Date today = new Date();
+        calendar.init(today, nextYear.getTime())
+                .withSelectedDate(today);
     }
 
     @Override
@@ -64,13 +85,14 @@ public class CreateNoteActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.home) {
-           NavUtils.navigateUpFromSameTask(this);
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-    public void backToMain (MenuItem item) {
+
+    public void backToMain(MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -83,18 +105,23 @@ public class CreateNoteActivity extends ActionBarActivity {
         finish();
     }
 
-    public void cancelButton (View v) {
+    public void cancelButton(View v) {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 
-    public void createMind (View v) {
+    public void remindMe(View v) {
+
+    }
+
+    public void createMind(View v) {
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
         if (name.getText().toString().isEmpty() || body.getText().toString().isEmpty()) {
             final SnackBar snackbar = new SnackBar(this, "All fields are required.", "OK", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                 }
             });
             snackbar.show();
