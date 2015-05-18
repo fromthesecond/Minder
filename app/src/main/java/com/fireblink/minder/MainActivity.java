@@ -2,7 +2,9 @@ package com.fireblink.minder;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -10,11 +12,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
@@ -45,6 +50,14 @@ public class MainActivity extends ActionBarActivity {
         fab.attachToListView(listView);
         attachDataToList();
         setOnListItemClickListener();
+        final PullRefreshLayout layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        layout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                layout.setRefreshing(false);
+            }
+        });
     }
 
     private void attachDataToList() {

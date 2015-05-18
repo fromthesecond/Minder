@@ -72,7 +72,6 @@ public class DataBaseHandler extends SQLiteOpenHelper implements IDataBaseHandle
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
-
         return cursor.getCount();
     }
 
