@@ -31,4 +31,5 @@ dependencies {
     compile 'com.squareup:android-times-square:1.5.0@aar'
     compile 'uk.co.androidalliance:edgeeffectoverride:1.0.2'
     compile 'com.baoyz.pullrefreshlayout:library:1.0.1'
+    compile 'com.github.amlcurran.showcaseview:library:5.0.0'
 }

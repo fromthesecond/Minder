@@ -8,6 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.r0adkll.slidr.Slidr;
 import com.r0adkll.slidr.model.SlidrConfig;
 import com.r0adkll.slidr.model.SlidrPosition;
@@ -18,6 +21,7 @@ public class ViewMindActivity extends ActionBarActivity {
     private TextView title;
     private TextView body;
     private DataBaseHandler db;
+    private Target viewTarget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,16 @@ public class ViewMindActivity extends ActionBarActivity {
         body = (TextView) findViewById(R.id.bodyTxt);
         title.setText(getIntent().getExtras().getString("title").toUpperCase());
         body.setText(getIntent().getExtras().getString("body"));
+
+        viewTarget = new ViewTarget(R.id.customToolbar, this);
+        new ShowcaseView.Builder(this)
+                .setTarget(viewTarget)
+                .setContentTitle("How to go back?")
+                .setContentText("You can swipe from left side")
+                .hideOnTouchOutside()
+                .singleShot(112)
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .build();
     }
 
     private void setupSystemBarColor() {
