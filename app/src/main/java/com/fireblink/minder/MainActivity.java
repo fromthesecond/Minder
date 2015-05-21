@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
@@ -37,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView listView;
     private DataBaseHandler db;
     private List<Mind> minds;
+    private TextView hiddenText;
     private Intent intent;
     private boolean exit;
 
@@ -45,6 +47,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSystemBarColor(this);
+        hiddenText = (TextView) findViewById(R.id.hiddenText);
+        hiddenText.setVisibility(View.GONE);
         listView = (ListView) findViewById(android.R.id.list);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listView);
@@ -63,12 +67,18 @@ public class MainActivity extends ActionBarActivity {
     private void attachDataToList() {
         db = new DataBaseHandler(this);
         minds = db.getAllMinds();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        for (Mind cn : minds) {
-            adapter.add(cn.get_name());
+        if (!minds.isEmpty()) {
+            adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+            for (Mind cn : minds) {
+                adapter.add(cn.get_name());
+            }
+            listView.setAdapter(adapter);
+            db.close();
+        } else {
+            listView.setVisibility(View.GONE);
+            hiddenText.setVisibility(View.VISIBLE);
         }
-        listView.setAdapter(adapter);
-        db.close();
+
     }
 
     private void setOnListItemClickListener() {

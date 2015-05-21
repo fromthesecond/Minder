@@ -15,6 +15,10 @@
         android:layout_height="match_parent" />
 
     </com.baoyz.widget.PullRefreshLayout>
+
+    <include
+        layout= "@layout/noitemsview"/>
+
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.fireblink.minder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -95,6 +96,9 @@ public class ViewMindActivity extends ActionBarActivity {
     public void deleteMind(MenuItem item) {
         db = new DataBaseHandler(this);
         db.deleteMind(db.getMindById(getIntent().getIntExtra("id", 0)));
+        Intent intent = new Intent(ViewMindActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // finish all previous activities
+        startActivity(intent);
         finish();
     }
 

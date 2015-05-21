@@ -8,6 +8,11 @@
         android:orderInCategory="2"
         android:icon="@drawable/ic_delete_white_24dp"
         app:showAsAction="always"/>
+    <item android:id="@+id/twitterMenu"
+        android:title="twitter"
+        android:orderInCategory="0"
+        android:icon="@drawable/twitter"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/menu_search"
         android:title="@string/app_name"
