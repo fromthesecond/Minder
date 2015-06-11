@@ -28,9 +28,14 @@ dependencies {
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'com.rengwuxian.materialedittext:library:2.0.3'
     compile 'com.r0adkll:slidableactivity:2.0.2'
-    compile 'com.squareup:android-times-square:1.5.0@aar'
+    compile 'com.prolificinteractive:material-calendarview:0.4.0'
     compile 'uk.co.androidalliance:edgeeffectoverride:1.0.2'
     compile 'com.baoyz.pullrefreshlayout:library:1.0.1'
     compile 'com.github.amlcurran.showcaseview:library:5.0.0'
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
 
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }

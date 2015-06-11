@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fireblink.minder.MainActivity">
+    tools:context="com.fireblink.minder.Activity.MainActivity">
     <item android:id="@+id/lock"
         android:title="@string/lock"
         android:onClick="testDelAllMinds"

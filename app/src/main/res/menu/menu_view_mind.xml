@@ -1,12 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fireblink.minder.ViewMindActivity">
+    tools:context="com.fireblink.minder.Activity.ViewMindActivity">
     <item
         android:id="@+id/menu_search2"
         android:title="@string/app_name"
         android:onClick="deleteMind"
         android:icon="@drawable/ic_delete_white_24dp"
         android:orderInCategory="1"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/editMind"
+        android:title="Edit"
+        android:icon="@drawable/ic_edit_white_24dp"
+        android:orderInCategory="0"
+        android:onClick="editMindSave"
         app:showAsAction="always"/>
 </menu>

@@ -1,32 +1,28 @@
-package com.fireblink.minder;
+package com.fireblink.minder.Activity;
 
 import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 import com.baoyz.widget.PullRefreshLayout;
+import com.fireblink.minder.Entity.Mind;
+import com.fireblink.minder.R;
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.melnykov.fab.FloatingActionButton;
-import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrConfig;
-import com.r0adkll.slidr.model.SlidrPosition;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.List;
@@ -36,7 +32,6 @@ public class MainActivity extends ActionBarActivity {
     private ArrayAdapter<String> adapter;
     private FloatingActionButton fab;
     private ListView listView;
-    private DataBaseHandler db;
     private List<Mind> minds;
     private TextView hiddenText;
     private Intent intent;
@@ -46,55 +41,67 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActiveAndroid.initialize(this);
         setSystemBarColor(this);
         hiddenText = (TextView) findViewById(R.id.hiddenText);
         hiddenText.setVisibility(View.GONE);
         listView = (ListView) findViewById(android.R.id.list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               // Cursor cursor = (Cursor) listView.getItemAtPosition(position); // wtf?
+                //Velocity
+                List <Mind> minds = new Select().from(Mind.class).execute();
+                intent = new Intent(MainActivity.this, ViewMindActivity.class);
+                intent.putExtra("title", minds.get(position).name);
+                intent.putExtra("body", minds.get(position).body);
+                intent.putExtra("id", minds.get(position).getId());
+                intent.putExtra("date", minds.get(position).date);
+                startActivity(intent);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Mind mind = new Select("Id").from(Mind.class).where("name LIKE 'Владос'").executeSingle();
+                mind.delete();
+                attachDataToList();
+                return true;
+            }
+        });
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listView);
         attachDataToList();
-        setOnListItemClickListener();
         final PullRefreshLayout layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         layout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
         layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                attachDataToList();
                 layout.setRefreshing(false);
             }
         });
     }
 
     private void attachDataToList() {
-        db = new DataBaseHandler(this);
-        minds = db.getAllMinds();
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy,   d MMMM  H:mm ");
+        List <Mind> minds = new Select().from(Mind.class).execute();
         if (!minds.isEmpty()) {
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
             for (Mind cn : minds) {
-                adapter.add(cn.get_name());
+                adapter.add(cn.name);
             }
             listView.setAdapter(adapter);
-            db.close();
         } else {
             listView.setVisibility(View.GONE);
             hiddenText.setVisibility(View.VISIBLE);
         }
-
     }
 
-    private void setOnListItemClickListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int dbId = (int) parent.getAdapter().getItemId(position) + 1;
-                Log.i("Debug: ", String.valueOf(dbId) + " dbID");
-                intent = new Intent(MainActivity.this, ViewMindActivity.class);
-                intent.putExtra("title", db.getMindById(dbId).get_name());
-                intent.putExtra("body", db.getMindById(dbId).get_body());
-                intent.putExtra("id", db.getMindById(dbId).get_id());
-                startActivity(intent);
-                db.close();
-            }
-        });
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        attachDataToList();
     }
 
     public void setSystemBarColor(Activity activity) {
@@ -119,16 +126,15 @@ public class MainActivity extends ActionBarActivity {
 
     public void testDelAllMinds(MenuItem item) {
         Dialog dialog = new Dialog(this, "Delete all minds", "Do you want to delete all minds ? ");
-        dialog.show();
         dialog.setOnAcceptButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteAll();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-                Toast.makeText(getApplicationContext(), "All minds have been deleted", Toast.LENGTH_LONG).show();
-                finish();
+                new Delete().from(Mind.class).execute();
+                attachDataToList();
+                return;
             }
         });
+        dialog.show();
     }
 
     @Override
@@ -137,7 +143,6 @@ public class MainActivity extends ActionBarActivity {
             if (!isFinishing()) {
                 finish();
             }
-
         } else {
             Toast.makeText(this, "Press Back Again to Exit", Toast.LENGTH_LONG).show();
             exit = true;

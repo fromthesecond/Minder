@@ -26,12 +26,16 @@
         <item name="android:textColor">#ff212121</item>
         <item name="colorControlActivated">@color/colorPrimaryBlue500</item>
         <item name="colorControlHighlight">#424242</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
         <item name="android:textSize">20sp</item>
     </style>
     <style name="customEditText2" parent="customEditText">
         <item name="android:textSize">14sp</item>
         <item name="android:editTextColor">@color/colorWhite</item>
         <item name="colorControlHighlight">#424242</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
     </style>
     <style name="ToolBarCustom" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryBlue500</item>

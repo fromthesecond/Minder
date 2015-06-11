@@ -1,5 +1,6 @@
-package com.fireblink.minder;
+package com.fireblink.minder.Activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -10,26 +11,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.fireblink.minder.Entity.Mind;
+import com.fireblink.minder.R;
+import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.squareup.timessquare.CalendarPickerView;
-
-import java.util.Calendar;
 import java.util.Date;
-
 
 public class CreateNoteActivity extends ActionBarActivity {
 
     private EditText name;
     private EditText body;
     private Toolbar toolbar;
-    private CalendarPickerView calendar;
+    private ButtonFlat buttonFlat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
-        setupCalendarDemo();
         setupSystemBarColor();
         setupToolBar();
         name = (EditText) findViewById(R.id.name);
@@ -38,6 +38,15 @@ public class CreateNoteActivity extends ActionBarActivity {
         body.setHint("Details");
         name.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
         body.setHintTextColor(getResources().getColor(R.color.colorPrimaryBlue500));
+    }
+
+    public void remindMe(View v) {
+        View calendarView = getLayoutInflater().inflate(R.layout.calendar, null);
+                new AlertDialog.Builder(CreateNoteActivity.this)
+                        .setView(calendarView)
+                        .setTitle("Set Remind Date")
+                        .show();
+
     }
 
     private void setupToolBar() {
@@ -61,16 +70,6 @@ public class CreateNoteActivity extends ActionBarActivity {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
         tintManager.setTintColor(getResources().getColor(R.color.colorPrimaryDarkBlue700));
-    }
-
-    private void setupCalendarDemo() {
-        Calendar nextYear = Calendar.getInstance();
-        nextYear.add(Calendar.YEAR, 1);
-
-        calendar = (CalendarPickerView) findViewById(R.id.calendar_view);
-        final Date today = new Date();
-        calendar.init(today, nextYear.getTime())
-                .withSelectedDate(today);
     }
 
     @Override
@@ -110,28 +109,28 @@ public class CreateNoteActivity extends ActionBarActivity {
         finish();
     }
 
-    public void remindMe(View v) {
-
-    }
-
     public void createMind(View v) {
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
-        if (name.getText().toString().isEmpty() || body.getText().toString().isEmpty()) {
+        if (name.getText().length() < 3 || body.getText().length() < 5 ) {
             final SnackBar snackbar = new SnackBar(this, "All fields are required.", "OK", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    return;
                 }
             });
             snackbar.show();
         } else {
-            DataBaseHandler db = new DataBaseHandler(this);
-            db.addMind(new Mind(name.getText().toString(), body.getText().toString()));
+            Mind mind = new Mind();
+            mind.name = name.getText().toString();
+            mind.body = body.getText().toString();
+            mind.date = new Date();
+            //TODO create row RemindDate
+            mind.save();
             finish();
-            db.close();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
         }
     }
 }
