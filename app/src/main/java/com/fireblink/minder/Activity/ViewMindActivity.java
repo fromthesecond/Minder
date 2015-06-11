@@ -1,34 +1,21 @@
 package com.fireblink.minder.Activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.fireblink.minder.Entity.Mind;
 import com.fireblink.minder.R;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
@@ -79,14 +66,15 @@ public class ViewMindActivity extends ActionBarActivity {
                 .build();
     }
 
-    private void setInformationToFields () {
+    private void setInformationToFields() {
         Mind mind = Mind.load(Mind.class, currentId);
         title = (TextView) findViewById(R.id.titleTxt);
         body = (TextView) findViewById(R.id.bodyTxt);
         title.setText(mind.getName().toString().toUpperCase());
         body.setText(mind.getBody().toString());
     }
-    public void editMindSave (MenuItem item) {
+
+    public void editMindSave(MenuItem item) {
         editTextName = (EditText) findViewById(R.id.name);
         editTextBody = (EditText) findViewById(R.id.body);
         hiddenButtonSave = (ButtonRectangle) findViewById(R.id.saveMindBtn);
@@ -128,14 +116,15 @@ public class ViewMindActivity extends ActionBarActivity {
     }
 
 
-    private void getCurrentId () {
+    private void getCurrentId() {
         if (currentId == null) {
             Mind mind = new Select("Id").from(Mind.class).where("name LIKE" + "'" +
                     getIntent().getExtras().getString("title") + "'").executeSingle();
             this.currentId = mind.getId();
-            Log.i("Data", "ID of current mind: "+ this.currentId);
+            Log.i("Data", "ID of current mind: " + this.currentId);
         }
     }
+
     private void setupSystemBarColor() {
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         tintManager.setStatusBarTintEnabled(true);
@@ -179,7 +168,7 @@ public class ViewMindActivity extends ActionBarActivity {
         finish();
     }
 
-    public void cancel (View view) {
+    public void cancel(View view) {
         editTextBody.setVisibility(View.GONE);
         editTextName.setVisibility(View.GONE);
         hiddenButtonSave.setVisibility(View.GONE);
@@ -188,6 +177,7 @@ public class ViewMindActivity extends ActionBarActivity {
         body.setVisibility(View.VISIBLE);
         setInformationToFields();
     }
+
     public void deleteMind(MenuItem item) {
         Mind.load(Mind.class, currentId).delete();
         Intent intent = new Intent(ViewMindActivity.this, MainActivity.class);

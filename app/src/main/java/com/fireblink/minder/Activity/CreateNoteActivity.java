@@ -14,9 +14,9 @@ import android.widget.EditText;
 import com.fireblink.minder.Entity.Mind;
 import com.fireblink.minder.R;
 import com.gc.materialdesign.views.ButtonFlat;
-import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 import java.util.Date;
 
 public class CreateNoteActivity extends ActionBarActivity {
@@ -42,10 +42,10 @@ public class CreateNoteActivity extends ActionBarActivity {
 
     public void remindMe(View v) {
         View calendarView = getLayoutInflater().inflate(R.layout.calendar, null);
-                new AlertDialog.Builder(CreateNoteActivity.this)
-                        .setView(calendarView)
-                        .setTitle("Set Remind Date")
-                        .show();
+        new AlertDialog.Builder(CreateNoteActivity.this)
+                .setView(calendarView)
+                .setTitle("Set Remind Date")
+                .show();
 
     }
 
@@ -112,7 +112,7 @@ public class CreateNoteActivity extends ActionBarActivity {
     public void createMind(View v) {
         name = (EditText) findViewById(R.id.name);
         body = (EditText) findViewById(R.id.body);
-        if (name.getText().length() < 3 || body.getText().length() < 5 ) {
+        if (name.getText().length() < 3 || body.getText().length() < 5) {
             final SnackBar snackbar = new SnackBar(this, "All fields are required.", "OK", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

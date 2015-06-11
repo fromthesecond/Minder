@@ -49,9 +49,9 @@ public class MainActivity extends ActionBarActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // Cursor cursor = (Cursor) listView.getItemAtPosition(position); // wtf?
+                // Cursor cursor = (Cursor) listView.getItemAtPosition(position); // wtf?
                 //Velocity
-                List <Mind> minds = new Select().from(Mind.class).execute();
+                List<Mind> minds = new Select().from(Mind.class).execute();
                 intent = new Intent(MainActivity.this, ViewMindActivity.class);
                 intent.putExtra("title", minds.get(position).name);
                 intent.putExtra("body", minds.get(position).body);
@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void attachDataToList() {
         //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy,   d MMMM  H:mm ");
-        List <Mind> minds = new Select().from(Mind.class).execute();
+        List<Mind> minds = new Select().from(Mind.class).execute();
         if (!minds.isEmpty()) {
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
             for (Mind cn : minds) {
