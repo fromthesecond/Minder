@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:visibility="gone"
     android:gravity="center_vertical|center_horizontal">
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No items here"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/hiddenText"
-        />
+        android:text="No Items Here"/>
 </LinearLayout>

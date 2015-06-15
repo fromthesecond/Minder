@@ -78,7 +78,7 @@
             android:id="@+id/cancelFlatViewMind"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/material_blue_500"
+            android:background="@color/colorPrimaryBlue500"
             android:visibility="gone"
             android:onClick="cancel"
             android:text="CANCEL"

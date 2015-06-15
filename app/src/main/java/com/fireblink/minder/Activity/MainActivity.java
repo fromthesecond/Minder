@@ -1,9 +1,14 @@
 package com.fireblink.minder.Activity;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +27,15 @@ import com.fireblink.minder.Entity.Mind;
 import com.fireblink.minder.R;
 import com.gc.materialdesign.widgets.Dialog;
 import com.gc.materialdesign.widgets.SnackBar;
-import com.melnykov.fab.FloatingActionButton;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.List;
@@ -30,12 +43,13 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
     private ArrayAdapter<String> adapter;
-    private FloatingActionButton fab;
     private ListView listView;
-    private List<Mind> minds;
     private TextView hiddenText;
     private Intent intent;
     private boolean exit;
+    private Drawer drawerResult;
+    private IProfile profile;
+    private AccountHeader headerResult = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +57,34 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ActiveAndroid.initialize(this);
         setSystemBarColor(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarMain);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        profile = new ProfileDrawerItem()
+                .withName("Mike Penz")
+                .withEmail("mikepenz@gmail.com");
+
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withCompactStyle(false)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(profile)
+                .withSavedInstance(savedInstanceState)
+                .build();
+        drawerResult = new DrawerBuilder()
+                .withActivity(MainActivity.this)
+                .withToolbar(toolbar)
+                .withAccountHeader(headerResult)
+                .withActionBarDrawerToggle(true)
+                .withHeader(R.layout.drawer_header)
+                .withAnimateDrawerItems(true)
+                .withSavedInstance(savedInstanceState)
+                .build();
         hiddenText = (TextView) findViewById(R.id.hiddenText);
         hiddenText.setVisibility(View.GONE);
         listView = (ListView) findViewById(android.R.id.list);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -69,9 +108,19 @@ public class MainActivity extends ActionBarActivity {
                 return true;
             }
         });
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToListView(listView);
         attachDataToList();
+        FloatingActionButton fabButton = new FloatingActionButton.Builder(this)
+                .withDrawable(getResources().getDrawable(R.drawable.ic_add_white_24dp))
+                .withButtonColor(Color.RED)
+                .withGravity(Gravity.BOTTOM | Gravity.RIGHT)
+                .withMargins(0, 0, 16, 16)
+                .create();
+        fabButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFloatingButtonClick();
+            }
+        });
         final PullRefreshLayout layout = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         layout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
         layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
@@ -118,7 +167,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void onFloatingButtonClick(View v) {
+    public void onFloatingButtonClick() {
         Intent intent = new Intent(this, CreateNoteActivity.class);
         startActivity(intent);
         finish();
@@ -139,6 +188,9 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
+        if(drawerResult.isDrawerOpen()){
+            drawerResult.closeDrawer();
+        }
         if (exit) {
             if (!isFinishing()) {
                 finish();
